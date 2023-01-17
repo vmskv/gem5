@@ -105,6 +105,7 @@ class InstDecoder : public SimObject
      * decode a full instruction.
      */
     bool instReady() const { return instDone; }
+    bool isStalled() const { return !instDone; }
 
     /**
      * Can the decoder accept more data?
