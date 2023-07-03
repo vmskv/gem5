@@ -49,6 +49,7 @@ namespace RiscvISA
 constexpr unsigned ELEN = 64;
 constexpr unsigned VLEN = 256;
 constexpr unsigned VLENB = VLEN / 8;
+constexpr unsigned NumVecElemPerVecReg = VLEN / ELEN;
 
 using VecRegContainer = gem5::VecRegContainer<VLENB>;
 using vreg_t = VecRegContainer;
@@ -68,12 +69,18 @@ const std::vector<std::string> VecRegNames = {
 // vector index
 const int VecMemInternalReg0 = NumVecStandardRegs;
 
+static inline VecElemRegClassOps<uint64_t>
+    vecRegElemClassOps(NumVecElemPerVecReg);
 static inline TypedRegClassOps<RiscvISA::VecRegContainer> vecRegClassOps;
 
 inline constexpr RegClass vecRegClass =
     RegClass(VecRegClass, VecRegClassName, NumVecRegs, debug::VecRegs).
         ops(vecRegClassOps).
         regType<VecRegContainer>();
+inline constexpr RegClass vecElemClass =
+    RegClass(VecElemClass, VecElemClassName, NumVecRegs * NumVecElemPerVecReg,
+            debug::VecRegs).
+        ops(vecRegElemClassOps);
 
 BitUnion32(VTYPE)
     Bitfield<31> vill;

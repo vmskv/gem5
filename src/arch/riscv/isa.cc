@@ -244,7 +244,6 @@ namespace
 {
 
 /* Not applicable to RISCV */
-RegClass vecElemClass(VecElemClass, VecElemClassName, 0, debug::IntRegs);
 RegClass vecPredRegClass(VecPredRegClass, VecPredRegClassName, 0,
         debug::IntRegs);
 RegClass matRegClass(MatRegClass, MatRegClassName, 0, debug::MatRegs);
